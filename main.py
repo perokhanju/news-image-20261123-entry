@@ -2,13 +2,14 @@
 """main.py — make.fun news-image-20261123 entry point.
 
 Run with no network access. Generates app/entry.png (if not present) and copies it
-to /output/entry.png for the competition sandbox.
+to $MAKEFUN_OUTPUT_DIR/app/entry.png (or /output/entry.png) for the competition sandbox.
 """
 import os
 import shutil
 
 APP_PNG  = os.path.join(os.path.dirname(__file__), "app", "entry.png")
-OUT_PATH = "/output/entry.png"
+OUT_DIR  = os.environ.get("MAKEFUN_OUTPUT_DIR", "/output")
+OUT_PATH = os.path.join(OUT_DIR, "app", "entry.png")
 
 def main():
     if not os.path.exists(APP_PNG):
