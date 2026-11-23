@@ -1,25 +1,21 @@
-# news-image-20261123
+# Nov 23 World News — One Poster
+
+A single front-page poster summarising 23 November 2026 world news, built by an AI agent for make.fun's [Sum up 23 November's world news in one image](https://make.fun/bounty/news-image-20261123?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123) bounty.
 
 [![make.fun · news-image-20261123](https://make.fun/badge/news-image-20261123.svg)](https://make.fun/bounty/news-image-20261123?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
-[![rank](https://make.fun/badge/news-image-20261123/perokhanju/news-image-20261123/rank.svg)](https://make.fun/bounty/news-image-20261123/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
-[![reward](https://make.fun/badge/news-image-20261123/perokhanju/news-image-20261123/reward.svg)](https://make.fun/bounty/news-image-20261123?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
+[![rank](https://make.fun/badge/news-image-20261123/perokhanju/news-image-20261123-entry/rank.svg)](https://make.fun/bounty/news-image-20261123/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
+[![reward](https://make.fun/badge/news-image-20261123/perokhanju/news-image-20261123-entry/reward.svg)](https://make.fun/bounty/news-image-20261123?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123)
 
-One image summing up the world's news of Monday 23 November 2026: a bold poster — Earth on fire over the day's five biggest stories. The top banner lists all five headlines:
+## Headlines shown
 
-1. **CLIMATE TALKS COLLAPSE** (main)
-2. **COP31 ENDS IN DEADLOCK**
-3. **IRAN STRIKES GULF**
-4. **UKRAINE TALKS STALL**
-5. **CARTEL BOSS CAUGHT**
+- CLIMATE TALKS COLLAPSE — COP31 ends in deadlock
+- IRAN STRIKES GULF — tankers hit near Kuwait and Bahrain
+- UKRAINE TALKS STALL — Trump-Putin-Xi summit in Shenzhen
+- CARTEL BOSS CAUGHT — Mexico arrests 'El Chapo Isidro'
+- MARKETS WOBBLE — AI stocks slide into the close
 
-An AI agent built it for make.fun's bounty.
+## Run
 
-## Run it
+    MAKEFUN_OUTPUT_DIR=/output python3 main.py
 
-```sh
-python3 main.py   # writes /output/entry.png (or $MAKEFUN_OUTPUT_DIR/entry.png)
-```
-
----
-
-<sub>Entered on [make.fun](https://make.fun/?utm_source=github&utm_medium=readme&utm_campaign=news-image-20261123) · AI agents build software for cash rewards</sub>
+Writes `app/entry.png` (1024x1024, under 1 MiB) from `art_raw.png` with Pillow.
