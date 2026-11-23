@@ -65,6 +65,24 @@ def add_top_gradient(img, height=380, max_alpha=200):
     return Image.alpha_composite(img.convert("RGBA"), overlay)
 
 
+def add_bottom_gradient(img, height=56, max_alpha=110):
+    """Subtle darkening at the bottom edge so the source line stays readable."""
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    for y in range(height):
+        alpha = int(max_alpha * (1.0 - y / height))
+        od.line([(0, H - 1 - y), (W, H - 1 - y)], fill=(0, 0, 0, alpha))
+    return Image.alpha_composite(img, overlay)
+
+
+def add_backing_band(img, y0, y1, alpha=150, radius=12):
+    """Semi-transparent dark rounded band behind headline/dateline for contrast."""
+    overlay = Image.new("RGBA", (W, H), (0, 0, 0, 0))
+    od = ImageDraw.Draw(overlay)
+    od.rounded_rectangle([24, y0, W - 24, y1], radius=radius, fill=(0, 0, 0, alpha))
+    return Image.alpha_composite(img, overlay)
+
+
 def draw_centered(draw, y, text, font, fill):
     """Draw text horizontally centered at top coordinate y."""
     x = (W - text_width(text, font)) // 2
@@ -92,6 +110,12 @@ def build_banner_lines(labels, font, sep, max_width):
 def draw_entry():
     img = load_background()
     img = add_top_gradient(img)
+    draw = ImageDraw.Draw(img)
+
+    # ── CONTRAST BACKING BANDS ────────────────────────────────────────────────
+    # subtle dark bands behind the dateline and headline so text stays crisp
+    img = add_backing_band(img, 118, 176, alpha=170, radius=14)   # dateline band
+    img = add_backing_band(img, 222, 318, alpha=150, radius=16)   # headline band
     draw = ImageDraw.Draw(img)
 
     # Fonts
@@ -125,7 +149,7 @@ def draw_entry():
         "UKRAINE TALKS STALL",
         "CARTEL BOSS CAUGHT",
     ]
-    strip_x0, strip_y0, strip_x1, strip_y1 = 20, 940, W - 20, 1010
+    strip_x0, strip_y0, strip_x1, strip_y1 = 20, 940, W - 20, 1000
     hard_max = 984
 
     font_size = 24
@@ -161,6 +185,17 @@ def draw_entry():
             line_text = sep.join(line_labels)
             line_y = start_y + i * (line_h + 6)
             draw.text((strip_x0 + 24, line_y), line_text, font=f_banner, fill=OFF_WHITE)
+
+    # ── BOTTOM GRADIENT + SOURCE LINE ─────────────────────────────────────────
+    f_source = load_font(15, bold=False)
+    source_text = "SOURCE: POLLINATIONS.AI  \u00b7  MAKE.FUN NEWS-IMAGE-20261123"
+    sw = text_width(source_text, f_source)
+    source_x = (W - sw) // 2
+    source_y = H - 21
+    img = add_bottom_gradient(img)
+    draw = ImageDraw.Draw(img)
+    draw.text((source_x + 1, source_y + 1), source_text, font=f_source, fill=(0, 0, 0))
+    draw.text((source_x, source_y), source_text, font=f_source, fill=(205, 195, 180))
 
     # Save
     os.makedirs(OUT_DIR, exist_ok=True)
